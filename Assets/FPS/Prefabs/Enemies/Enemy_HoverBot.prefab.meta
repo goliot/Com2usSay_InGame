@@ -1,14 +1,7 @@
 fileFormatVersion: 2
-guid: 25a1b0efadb966e44889fce712c8ff8d
+guid: 9dda30329b0fae7408cfb0abd917168d
 PrefabImporter:
   externalObjects: {}
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 156015
-  packageName: Unity Learn | FPS Microgame | URP
-  packageVersion: 3.1.0
-  assetPath: Assets/FPS/Prefabs/Enemies/Enemy_HoverBot.prefab
-  uploadId: 627568
