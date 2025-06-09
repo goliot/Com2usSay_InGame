@@ -12,7 +12,6 @@ public class UI_Currency : MonoBehaviour
     private void OnEnable()
     {
         EventManager.AddListener<CurrencyChangedEvent>(OnCurrencyChanged);
-        Refresh();
     }
 
     private void OnDisable()

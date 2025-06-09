@@ -1,7 +1,15 @@
 using System.Collections.Generic;
+using System;
 
-[System.Serializable]
+[Serializable]
 public class CurrencySaveData
 {
-    public List<CurrencyDTO> DataList;
+    public ECurrencyType Type;
+    public int Value;
+}
+
+[Serializable]
+public class CurrencySaveDatas
+{
+    public List<CurrencySaveData> DataList;
 }

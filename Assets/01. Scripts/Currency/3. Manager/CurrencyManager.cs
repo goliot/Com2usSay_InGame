@@ -39,6 +39,8 @@ public class CurrencyManager : Singleton<CurrencyManager>
 
             _currencies.Add(type, new Currency(type, 0));
         }
+
+        EventManager.Broadcast(_currencyChangedEvent);
     }
 
     private List<CurrencyDTO> ToDtoList()
