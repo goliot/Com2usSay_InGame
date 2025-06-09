@@ -2,13 +2,12 @@ using System;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.FPS.Game;
 
 public class CurrencyManager : Singleton<CurrencyManager>
 {
-    public event Action OnCurrencyChanged;
-
+    private CurrencyChangedEvent _currencyChangedEvent = new CurrencyChangedEvent();
     private Dictionary<ECurrencyType, Currency> _currencies;
-
     private CurrencyRepository _repository;
 
     private void Awake()
@@ -59,18 +58,17 @@ public class CurrencyManager : Singleton<CurrencyManager>
 
         _repository.Save(ToDtoList());
 
-        OnCurrencyChanged?.Invoke();
+        EventManager.Broadcast(_currencyChangedEvent);
     }
 
     public bool TryUseCurrency(ECurrencyType type, int value)
     {
         if (!_currencies[type].TryUse(value))
-        {
             return false;
-        }
 
         _repository.Save(ToDtoList());
-        OnCurrencyChanged?.Invoke();
+
+        EventManager.Broadcast(_currencyChangedEvent);
         return true;
     }
 }
