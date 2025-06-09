@@ -20,26 +20,25 @@ public class CurrencyManager : Singleton<CurrencyManager>
     {
         _repository = new CurrencyRepository();
         _currencies = new Dictionary<ECurrencyType, Currency>((int)ECurrencyType.Count);
-        List<CurrencyDTO> loadCurrencies = _repository.Load();
-        if(loadCurrencies == null)
-        {
 
-            foreach (ECurrencyType type in Enum.GetValues(typeof(ECurrencyType)))
+        List<CurrencyDTO> loadCurrencies = _repository.Load();
+
+        if (loadCurrencies != null)
+        {
+            foreach (var data in loadCurrencies)
             {
-                if (type == ECurrencyType.Count)
-                {
-                    continue;
-                }
-                _currencies.Add(type, new Currency(type, 0));
+                _currencies[data.Type] = new Currency(data.Type, data.Value);
             }
         }
-        else
+
+        foreach (ECurrencyType type in Enum.GetValues(typeof(ECurrencyType)))
         {
-            foreach(var data in loadCurrencies)
+            if (type == ECurrencyType.Count || _currencies.ContainsKey(type))
             {
-                Currency currency = new Currency(data.Type, data.Value);
-                _currencies.Add(data.Type, currency);
+                continue;
             }
+
+            _currencies.Add(type, new Currency(type, 0));
         }
     }
 
