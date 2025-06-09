@@ -9,11 +9,15 @@ public class UI_Currency : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _diamondCountText;
     [SerializeField] private TextMeshProUGUI _buyHealthText;
 
-    private void Start()
+    private void OnEnable()
     {
-        CurrencyManager.Instance.OnCurrencyChanged += Refresh;
-
+        EventManager.AddListener<CurrencyChangedEvent>(OnCurrencyChanged);
         Refresh();
+    }
+
+    private void OnDisable()
+    {
+        EventManager.RemoveListener<CurrencyChangedEvent>(OnCurrencyChanged);
     }
 
     private void Update()
@@ -22,6 +26,11 @@ public class UI_Currency : MonoBehaviour
         {
             OnClickBuyHealth();
         }
+    }
+
+    private void OnCurrencyChanged(CurrencyChangedEvent evt)
+    {
+        Refresh();
     }
 
     private void Refresh()
@@ -37,14 +46,6 @@ public class UI_Currency : MonoBehaviour
 
     public void OnClickBuyHealth()
     {
-        // 나쁜 코드
-        //if (CurrencyManager.Instance.GetValue(ECurrencyType.Gold).Value >= 300)
-        //{
-        //    CurrencyManager.Instance.SubtractCurrency(ECurrencyType.Gold, 300);
-        //    Health playerHealth = FindAnyObjectByType<PlayerCharacterController>().GetComponent<Health>();
-        //    playerHealth.Heal(100);
-        //}
-
         // 묻지 말고 시켜라!
         if (CurrencyManager.Instance.TryUseCurrency(ECurrencyType.Gold, 300))
         {
