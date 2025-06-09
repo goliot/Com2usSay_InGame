@@ -1,0 +1,77 @@
+using System;
+using UnityEngine;
+using System.Collections.Generic;
+using System.Linq;
+
+public class CurrencyManager : Singleton<CurrencyManager>
+{
+    public event Action OnCurrencyChanged;
+
+    private Dictionary<ECurrencyType, Currency> _currencies;
+
+    private CurrencyRepository _repository;
+
+    private void Awake()
+    {
+        Init();
+    }
+
+    private void Init()
+    {
+        _repository = new CurrencyRepository();
+        _currencies = new Dictionary<ECurrencyType, Currency>((int)ECurrencyType.Count);
+        List<CurrencyDTO> loadCurrencies = _repository.Load();
+        if(loadCurrencies == null)
+        {
+
+            foreach (ECurrencyType type in Enum.GetValues(typeof(ECurrencyType)))
+            {
+                if (type == ECurrencyType.Count)
+                {
+                    continue;
+                }
+                _currencies.Add(type, new Currency(type, 0));
+            }
+        }
+        else
+        {
+            foreach(var data in loadCurrencies)
+            {
+                Currency currency = new Currency(data.Type, data.Value);
+                _currencies.Add(data.Type, currency);
+            }
+        }
+    }
+
+    private List<CurrencyDTO> ToDtoList()
+    {
+        return _currencies.Values.ToList().ConvertAll(currency => new CurrencyDTO(currency));
+    }
+
+    public CurrencyDTO GetValue(ECurrencyType type)
+    {
+        return new CurrencyDTO(_currencies[type]);
+    }
+
+    public void AddCurrency(ECurrencyType type, int value)
+    {
+        _currencies[type].Add(value);
+        Debug.Log($"{type} : {_currencies[type].Value}");
+
+        _repository.Save(ToDtoList());
+
+        OnCurrencyChanged?.Invoke();
+    }
+
+    public bool TryUseCurrency(ECurrencyType type, int value)
+    {
+        if (!_currencies[type].TryUse(value))
+        {
+            return false;
+        }
+
+        _repository.Save(ToDtoList());
+        OnCurrencyChanged?.Invoke();
+        return true;
+    }
+}

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Unity.FPS.Game;
 using UnityEngine;
 using UnityEngine.AI;
@@ -371,6 +371,8 @@ namespace Unity.FPS.AI
             {
                 Instantiate(LootPrefab, transform.position, Quaternion.identity);
             }
+
+            CurrencyManager.Instance.AddCurrency(ECurrencyType.Gold, 100);
 
             // this will call the OnDestroy function
             Destroy(gameObject, DeathDuration);
