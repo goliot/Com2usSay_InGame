@@ -64,7 +64,7 @@ public class AchievementManager : Singleton<AchievementManager>
                 if(metaData != null)
                 {
                     _achievements.Add(new Achievement(metaData, data));
-                    Instantiate(_achievementSlot, _achievementSlotPanelTransform);
+                    //Instantiate(_achievementSlot, _achievementSlotPanelTransform);
                 }
             }
         }
@@ -75,7 +75,7 @@ public class AchievementManager : Singleton<AchievementManager>
             if (duplicatedId == null)
             {
                 _achievements.Add(new Achievement(so));
-                Instantiate(_achievementSlot, _achievementSlotPanelTransform);
+                //Instantiate(_achievementSlot, _achievementSlotPanelTransform);
             }
         }
 
