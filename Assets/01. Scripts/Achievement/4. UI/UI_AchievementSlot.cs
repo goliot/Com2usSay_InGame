@@ -1,6 +1,5 @@
 using System;
 using TMPro;
-using Unity.FPS.Game;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -32,7 +31,6 @@ public class UI_AchievementSlot : MonoBehaviour
     public void OnClickClaimRewardButton()
     {
         Debug.Log("업적받기");
-        //EventManager.Broadcast(new CurrencyIncreaseEvent(ECurrencyType.Gold, int.Parse(_rewardAmountText.text)));
         if(AchievementManager.Instance.TryClaimReward(_achievementDto))
         {
             _rewardClaimDateText.text = DateTime.Now.ToString("yyyy.MM.dd");
