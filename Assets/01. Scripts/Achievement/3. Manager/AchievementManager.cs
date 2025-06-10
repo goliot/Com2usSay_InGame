@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Unity.FPS.Game;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -19,7 +20,7 @@ public class AchievementManager : Singleton<AchievementManager>
 
     private void Start()
     {
-        EventManager.AddListener<CurrencyIncreasedEvent>(CurrencyIncrease);
+        EventManager.AddListener<CurrencyIncreaseEvent>(CurrencyIncrease);
         EventManager.AddListener<MonsterKillEvent>(MonsterKill);
     }
 
@@ -32,7 +33,7 @@ public class AchievementManager : Singleton<AchievementManager>
         }
     }
 
-    private void CurrencyIncrease(CurrencyIncreasedEvent evt)
+    private void CurrencyIncrease(CurrencyIncreaseEvent evt)
     {
         if(evt.Type == ECurrencyType.Gold)
         {
@@ -67,5 +68,19 @@ public class AchievementManager : Singleton<AchievementManager>
         }
 
         EventManager.Broadcast(_achivementDataChangedEvent);
+    }
+
+    public bool TryClaimReward(AchievementDTO achievementDto)
+    {
+        Achievement achievement = _achievements.Find(item => item.ID == achievementDto.ID);
+        
+        if(achievement.TryClaimReward())
+        {
+            CurrencyManager.Instance.AddCurrency(achievement.RewardCurrencyType, achievement.RewardAmount);
+
+            return true;
+        }
+
+        return false;
     }
 }

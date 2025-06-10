@@ -14,10 +14,10 @@ public class Achievement
     public int RewardAmount;
 
     [Header("# 상태")]
-    private int _currentValue;
+    private int _currentValue = 0;
     public int CurrentValue => _currentValue;
 
-    private bool _isRewardClaimed;
+    private bool _isRewardClaimed = false;
     public bool IsRewardClaimed => _isRewardClaimed;
 
     public Achievement(string id, string name, string description, EAchievementCondition condition, int goalValue, ECurrencyType rewardCurrencyType, int rewardAmount)
@@ -71,5 +71,26 @@ public class Achievement
         }
 
         _currentValue += value;
+    }
+
+    public void ClaimReward()
+    {
+        _isRewardClaimed = true;
+    }
+
+    public bool CanGetReward()
+    {
+        return !IsRewardClaimed && CurrentValue >= GoalValue;
+    }
+
+    public bool TryClaimReward()
+    {
+        if(CanGetReward())
+        {
+            ClaimReward();
+            return true;
+        }
+
+        return false;
     }
 }

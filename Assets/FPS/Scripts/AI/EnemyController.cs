@@ -373,7 +373,7 @@ namespace Unity.FPS.AI
                 Instantiate(LootPrefab, transform.position, Quaternion.identity);
             }
 
-            EventManager.Broadcast(new CurrencyIncreasedEvent(ECurrencyType.Gold, 100));
+            EventManager.Broadcast(new CurrencyIncreaseEvent(ECurrencyType.Gold, 100));
             EventManager.Broadcast(new MonsterKillEvent());
             //CurrencyManager.Instance.AddCurrency(ECurrencyType.Gold, 100);
             //AchievementManager.Instance.Increase(EAchievementCondition.DroneKillCount, 1);

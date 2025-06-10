@@ -1,6 +1,5 @@
 using System;
 
-[Serializable]
 public class AchievementDTO
 {
     public readonly string ID;
@@ -39,5 +38,10 @@ public class AchievementDTO
         RewardAmount = achievement.RewardAmount;
         CurrentValue = achievement.CurrentValue;
         IsRewardClaimed = achievement.IsRewardClaimed;
+    }
+
+    public bool CanClaimReward()
+    {
+        return !IsRewardClaimed && CurrentValue >= GoalValue;
     }
 }
