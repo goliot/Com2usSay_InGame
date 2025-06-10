@@ -16,6 +16,12 @@ namespace Unity.FPS.Game
         public static AmmoPickupEvent AmmoPickupEvent = new AmmoPickupEvent();
         public static DamageEvent DamageEvent = new DamageEvent();
         public static DisplayMessageEvent DisplayMessageEvent = new DisplayMessageEvent();
+        public static AchievementDataChangedEvent AchievementDataChangedEvent = new AchievementDataChangedEvent();
+        public static CurrencyChangedEvent CurrencyChangedEvent = new CurrencyChangedEvent();
+        public static CurrencyIncreaseEvent CurrencyIncreaseEvent = new CurrencyIncreaseEvent();
+        public static MonsterKillEvent MonsterKillEvent = new MonsterKillEvent();
+        public static NewAchievementNotificationEvent NewAchievementRewarded = new NewAchievementNotificationEvent();
+        public static NotificationPopupEndEvent NotificationPopupEndEvent = new NotificationPopupEndEvent();
     }
 
     public class ObjectiveUpdateEvent : GameEvent
@@ -63,4 +69,40 @@ namespace Unity.FPS.Game
         public string Message;
         public float DelayBeforeDisplay;
     }
+
+    public class AchievementDataChangedEvent : GameEvent { }
+
+    public class CurrencyChangedEvent : GameEvent { }
+
+    public class CurrencyIncreaseEvent : GameEvent
+    {
+        public ECurrencyType Type { get; set; }
+        public int Value { get; set; }
+
+        public CurrencyIncreaseEvent() { }
+        public CurrencyIncreaseEvent(ECurrencyType type, int value)
+        {
+            Type = type;
+            Value = value;
+        }
+    }
+
+    public class MonsterKillEvent : GameEvent
+    {
+        public EEnemyType Type;
+    }
+
+    public class NewAchievementNotificationEvent : GameEvent
+    {
+        public AchievementDTO AchievementDto;
+
+        public NewAchievementNotificationEvent() { }
+
+        public NewAchievementNotificationEvent(AchievementDTO achievementDto)
+        {
+            AchievementDto = achievementDto;
+        }
+    }
+
+    public class NotificationPopupEndEvent : GameEvent { }
 }

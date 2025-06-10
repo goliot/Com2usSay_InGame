@@ -52,15 +52,36 @@ public class Achievement
         RewardAmount = rewardAmount;
     }
 
-    public Achievement(AchievementSO metaData)
+    public Achievement(AchievementSO metaData, AchievementDTO dto = null)
     {
-        ID = metaData.ID;
+        if(dto != null)
+        {
+            ID = dto.ID;
+            _currentValue = dto.CurrentValue;
+            _isRewardClaimed = dto.IsRewardClaimed;
+        }
+        else
+        {
+            ID = metaData.ID;
+        }
+
         Name = metaData.Name;
         Description = metaData.Description;
         Condition = metaData.Condition;
         GoalValue = metaData.GoalValue;
         RewardCurrencyType = metaData.RewardCurrencyType;
         RewardAmount = metaData.RewardAmount;
+    }
+
+    public Achievement(AchievementDTO dto)
+    {
+        ID = dto.ID;
+        Name = dto.Name;
+        Description = dto.Description;
+        Condition = dto.Condition;
+        GoalValue = dto.GoalValue;
+        RewardCurrencyType = dto.RewardCurrencyType;
+        RewardAmount = dto.RewardAmount;
     }
 
     public void Increase(int value)

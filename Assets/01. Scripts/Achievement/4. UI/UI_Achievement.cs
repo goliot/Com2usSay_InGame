@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using Unity.FPS.Game;
+using System.Linq;
 
 public class UI_Achievement : MonoBehaviour
 {
@@ -8,8 +9,15 @@ public class UI_Achievement : MonoBehaviour
 
     private void Start()
     {
-        EventManager.AddListener<OnAchievementDataChangedEvent>(Refresh);
+        GetSlots();
         Refresh();
+        EventManager.AddListener<AchievementDataChangedEvent>(Refresh);
+    }
+
+    private void GetSlots()
+    {
+        UI_AchievementSlot[] slots = FindObjectsByType<UI_AchievementSlot>(FindObjectsSortMode.None);
+        _slots = slots.ToList<UI_AchievementSlot>();
     }
 
     private void Refresh()
@@ -22,7 +30,7 @@ public class UI_Achievement : MonoBehaviour
         }
     }
 
-    private void Refresh(OnAchievementDataChangedEvent evt)
+    private void Refresh(AchievementDataChangedEvent evt)
     {
         List<AchievementDTO> achievements = AchievementManager.Instance.Achievements;
 

@@ -9,7 +9,7 @@ public class CurrencyRepository
     // Save
     public void Save(List<CurrencyDTO> dataList)
     {
-        CurrencySaveDatas datas = new CurrencySaveDatas();
+        CurrencySaveDataList datas = new CurrencySaveDataList();
         datas.DataList = dataList.ConvertAll(data => new CurrencySaveData
         {
             Type = data.Type,
@@ -29,7 +29,7 @@ public class CurrencyRepository
         }
 
         string json = PlayerPrefs.GetString(SAVE_KEY);
-        CurrencySaveDatas datas = JsonUtility.FromJson<CurrencySaveDatas>(json);
+        CurrencySaveDataList datas = JsonUtility.FromJson<CurrencySaveDataList>(json);
 
         return datas.DataList.ConvertAll<CurrencyDTO>(data => new CurrencyDTO(data.Type, data.Value));
     }
