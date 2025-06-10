@@ -1,20 +1,23 @@
 using System.Collections.Generic;
 using Unity.FPS.Game;
-using Unity.VisualScripting;
 using UnityEngine;
-
+using System;
 
 public class AchievementManager : Singleton<AchievementManager>
 {
-    private OnAchievementDataChangedEvent _achivementDataChangedEvent = new OnAchievementDataChangedEvent();
-
+    private AchievementRepository _repositiory;
+    [SerializeField] private Transform _achievementSlotPanelTransform;
+    [SerializeField] private GameObject _achievementSlot;
     [SerializeField] private List<AchievementSO> _metaDatas;
     private List<Achievement> _achievements;
     public List<AchievementDTO> Achievements => _achievements.ConvertAll((value) => new AchievementDTO(value));
 
+    public event Action<AchievementDTO> OnNewAchievementRewarded;
+
     protected override void Awake()
     {
         base.Awake();
+
         Init();
     }
 
@@ -24,14 +27,82 @@ public class AchievementManager : Singleton<AchievementManager>
         EventManager.AddListener<MonsterKillEvent>(MonsterKill);
     }
 
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+        EventManager.RemoveListener<CurrencyIncreaseEvent>(CurrencyIncrease);
+        EventManager.RemoveListener<MonsterKillEvent>(MonsterKill);
+    }
+
+
+    private Achievement FindByID(string id)
+    {
+        return _achievements.Find(data => data.ID == id);
+    }
+
+    private AchievementSO FindMetaDataByID(string id)
+    {
+        return _metaDatas.Find(data => data.ID == id);
+    }
+
     private void Init()
     {
-        _achievements = new List<Achievement>();
-        foreach(var so in _metaDatas)
+        foreach (Transform child in _achievementSlotPanelTransform)
         {
-            _achievements.Add(new Achievement(so));
+            Destroy(child.gameObject);
+        }
+
+        _repositiory = new AchievementRepository();
+        _achievements = new List<Achievement>();
+        List<AchievementDTO> loadAchievements = _repositiory.Load()?.ConvertAll(data => new AchievementDTO(data.ID, data.CurrentValue, data.IsRewardClaimed));
+
+        if (loadAchievements != null)
+        {
+            foreach(var data in loadAchievements)
+            {
+                AchievementSO metaData = FindMetaDataByID(data.ID);
+                if(metaData != null)
+                {
+                    _achievements.Add(new Achievement(metaData, data));
+                    Instantiate(_achievementSlot, _achievementSlotPanelTransform);
+                }
+            }
+        }
+
+        foreach (var so in _metaDatas)
+        {
+            Achievement duplicatedId = FindByID(so.ID);
+            if (duplicatedId == null)
+            {
+                _achievements.Add(new Achievement(so));
+                Instantiate(_achievementSlot, _achievementSlotPanelTransform);
+            }
+        }
+
+        CleanUpInvalidAchievements();
+
+        foreach (var item in _achievements)
+        {
+            Debug.Log($"업적 로드 : {item.ID}");
         }
     }
+
+    private void CleanUpInvalidAchievements()
+    {
+        var toRemove = new List<Achievement>();
+        foreach (var item in _achievements)
+        {
+            if (FindMetaDataByID(item.ID) == null)
+            {
+                toRemove.Add(item);
+            }
+        }
+        foreach (var item in toRemove)
+        {
+            _achievements.Remove(item);
+        }
+    }
+
 
     private void CurrencyIncrease(CurrencyIncreaseEvent evt)
     {
@@ -63,21 +134,35 @@ public class AchievementManager : Singleton<AchievementManager>
         {
             if(achievement.Condition == condition)
             {
+                bool prevCanGetReward = achievement.CanGetReward();
                 achievement.Increase(value);
+                bool curCanGetReward = achievement.CanGetReward();
+
+                if(!prevCanGetReward && curCanGetReward)
+                {
+                     //TODO : 새로운 리워드 보상 알림
+                    //OnNewAchievementRewarded?.Invoke(new AchievementDTO(achievement));
+                    Events.NewAchievementRewarded.AchievementDto = new AchievementDTO(achievement);
+                    EventManager.Broadcast(Events.NewAchievementRewarded);
+                }
             }
         }
-
-        EventManager.Broadcast(_achivementDataChangedEvent);
+        _repositiory.Save(Achievements);
+        EventManager.Broadcast(Events.AchievementDataChangedEvent);
     }
 
     public bool TryClaimReward(AchievementDTO achievementDto)
     {
-        Achievement achievement = _achievements.Find(item => item.ID == achievementDto.ID);
+        Achievement achievement = FindByID(achievementDto.ID);
         
         if(achievement.TryClaimReward())
         {
-            CurrencyManager.Instance.AddCurrency(achievement.RewardCurrencyType, achievement.RewardAmount);
-            EventManager.Broadcast(_achivementDataChangedEvent);
+            Events.CurrencyIncreaseEvent.Type = achievement.RewardCurrencyType;
+            Events.CurrencyIncreaseEvent.Value = achievement.RewardAmount;
+            EventManager.Broadcast(Events.CurrencyIncreaseEvent);
+            //CurrencyManager.Instance.AddCurrency(achievement.RewardCurrencyType, achievement.RewardAmount);
+            _repositiory.Save(Achievements);
+            EventManager.Broadcast(Events.AchievementDataChangedEvent);
             return true;
         }
 

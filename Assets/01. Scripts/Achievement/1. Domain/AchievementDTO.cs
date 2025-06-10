@@ -14,15 +14,9 @@ public class AchievementDTO
 
     public AchievementDTO() { }
 
-    public AchievementDTO(string id, string name, string description, EAchievementCondition condition, int goalValue, ECurrencyType rewardCurrencyType, int rewardAmount, int currentValue, bool isRewardClaimed)
+    public AchievementDTO(string id, int currentValue, bool isRewardClaimed)
     {
         ID = id;
-        Name = name;
-        Description = description;
-        Condition = condition;
-        GoalValue = goalValue;
-        RewardCurrencyType = rewardCurrencyType;
-        RewardAmount = rewardAmount;
         CurrentValue = currentValue;
         IsRewardClaimed = isRewardClaimed;
     }

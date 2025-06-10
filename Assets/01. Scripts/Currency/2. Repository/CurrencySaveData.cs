@@ -9,7 +9,7 @@ public class CurrencySaveData
 }
 
 [Serializable]
-public class CurrencySaveDatas
+public class CurrencySaveDataList
 {
     public List<CurrencySaveData> DataList;
 }

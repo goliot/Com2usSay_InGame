@@ -6,12 +6,12 @@ using Unity.FPS.Game;
 
 public class CurrencyManager : Singleton<CurrencyManager>
 {
-    private CurrencyChangedEvent _currencyChangedEvent = new CurrencyChangedEvent();
     private Dictionary<ECurrencyType, Currency> _currencies;
     private CurrencyRepository _repository;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         Init();
     }
 
@@ -45,7 +45,7 @@ public class CurrencyManager : Singleton<CurrencyManager>
             _currencies.Add(type, new Currency(type, 0));
         }
 
-        EventManager.Broadcast(_currencyChangedEvent);
+        EventManager.Broadcast(Events.CurrencyChangedEvent);
     }
 
     private List<CurrencyDTO> ToDtoList()
@@ -70,7 +70,9 @@ public class CurrencyManager : Singleton<CurrencyManager>
 
         _repository.Save(ToDtoList());
 
-        EventManager.Broadcast(_currencyChangedEvent);
+        Events.CurrencyIncreaseEvent.Type = type;
+        Events.CurrencyIncreaseEvent.Value = value;
+        EventManager.Broadcast(Events.CurrencyChangedEvent);
     }
 
     public bool TryUseCurrency(ECurrencyType type, int value)
@@ -80,7 +82,7 @@ public class CurrencyManager : Singleton<CurrencyManager>
 
         _repository.Save(ToDtoList());
 
-        EventManager.Broadcast(_currencyChangedEvent);
+        EventManager.Broadcast(Events.CurrencyChangedEvent);
         return true;
     }
 }
