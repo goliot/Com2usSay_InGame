@@ -15,6 +15,11 @@ public class CurrencyManager : Singleton<CurrencyManager>
         Init();
     }
 
+    private void Start()
+    {
+        EventManager.AddListener<CurrencyIncreasedEvent>(AddCurrency);
+    }
+
     private void Init()
     {
         _repository = new CurrencyRepository();
@@ -53,13 +58,19 @@ public class CurrencyManager : Singleton<CurrencyManager>
         return new CurrencyDTO(_currencies[type]);
     }
 
-    public void AddCurrency(ECurrencyType type, int value)
+    private void AddCurrency(CurrencyIncreasedEvent evt)
+    {
+        AddCurrency(evt.Type, evt.Value);
+    }
+
+    private void AddCurrency(ECurrencyType type, int value)
     {
         _currencies[type].Add(value);
         Debug.Log($"{type} : {_currencies[type].Value}");
 
         _repository.Save(ToDtoList());
 
+        //EventManager.Broadcast(new CurrencyIncreasedEvent(type, value));
         EventManager.Broadcast(_currencyChangedEvent);
     }
 

@@ -7,6 +7,12 @@ namespace Unity.FPS.Game
     {
     }
 
+    public abstract class GameEvent<T> : GameEvent
+    {
+        public T Value { get; }
+        protected GameEvent(T value) => Value = value;
+    }
+
     // A simple Event System that can be used for remote systems communication
     public static class EventManager
     {

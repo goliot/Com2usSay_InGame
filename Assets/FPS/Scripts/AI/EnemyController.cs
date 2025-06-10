@@ -3,6 +3,7 @@ using Unity.FPS.Game;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
+using static UnityEngine.Rendering.DebugUI;
 
 namespace Unity.FPS.AI
 {
@@ -372,7 +373,12 @@ namespace Unity.FPS.AI
                 Instantiate(LootPrefab, transform.position, Quaternion.identity);
             }
 
-            CurrencyManager.Instance.AddCurrency(ECurrencyType.Gold, 100);
+            EventManager.Broadcast(new CurrencyIncreasedEvent(ECurrencyType.Gold, 100));
+            EventManager.Broadcast(new MonsterKillEvent());
+            //CurrencyManager.Instance.AddCurrency(ECurrencyType.Gold, 100);
+            //AchievementManager.Instance.Increase(EAchievementCondition.DroneKillCount, 1);
+            // 1. 돈벌엏ㅆ따
+            // 2. 몬스터 죽였따.
 
             // this will call the OnDestroy function
             Destroy(gameObject, DeathDuration);

@@ -52,6 +52,17 @@ public class Achievement
         RewardAmount = rewardAmount;
     }
 
+    public Achievement(AchievementSO metaData)
+    {
+        ID = metaData.ID;
+        Name = metaData.Name;
+        Description = metaData.Description;
+        Condition = metaData.Condition;
+        GoalValue = metaData.GoalValue;
+        RewardCurrencyType = metaData.RewardCurrencyType;
+        RewardAmount = metaData.RewardAmount;
+    }
+
     public void Increase(int value)
     {
         if(value <= 0)

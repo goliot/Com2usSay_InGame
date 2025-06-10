@@ -5,6 +5,7 @@ public enum EAchievementCondition
     BossKillCount,
     PlayTime,
     Trigger,
+    DiamondCollect,
 
     Count,
 }
