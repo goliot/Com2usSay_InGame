@@ -1,9 +1,11 @@
 using System;
 using UnityEngine;
 
+[Serializable]
 public class Achievement
 {
     [Header("# 데이터")]
+    public readonly string ID;
     public readonly string Name;
     public readonly string Description;
     public readonly EAchievementCondition Condition;
@@ -18,8 +20,12 @@ public class Achievement
     private bool _isRewardClaimed;
     public bool IsRewardClaimed => _isRewardClaimed;
 
-    public Achievement(string name, string description, EAchievementCondition condition, int goalValue, ECurrencyType rewardCurrencyType, int rewardAmount)
+    public Achievement(string id, string name, string description, EAchievementCondition condition, int goalValue, ECurrencyType rewardCurrencyType, int rewardAmount)
     {
+        if(string.IsNullOrEmpty(id))
+        {
+            throw new ArgumentException("ID는 비어있을 수 없습니다.");
+        }
         if(string.IsNullOrEmpty(name))
         {
             throw new ArgumentException("업적 이름은 비어있을 수 없습니다.");
@@ -37,6 +43,7 @@ public class Achievement
             throw new ArgumentException("업적 보상은 0보다 커야 합니다.");
         }
 
+        ID = id;
         Name = name;
         Description = description;
         Condition = condition;
