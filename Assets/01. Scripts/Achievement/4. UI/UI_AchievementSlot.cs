@@ -14,28 +14,28 @@ public class UI_AchievementSlot : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _rewardClaimDateText;
     [SerializeField] private Button _getRewardButton;
 
-    public void Refresh(AchievementDTO achievement)
+    private AchievementDTO _achievementDto;
+
+    public void Refresh(AchievementDTO achievementDto)
     {
-        _nameText.text = achievement.Name;
-        _descriptionText.text = achievement.Description;
-        _rewardAmountText.text = achievement.RewardAmount.ToString();
-        _progressSlider.value = achievement.CurrentValue / achievement.GoalValue;
-        _progressText.text = $"{achievement.CurrentValue} / {achievement.GoalValue}";
+        _achievementDto = achievementDto;
+
+        _nameText.text = achievementDto.Name;
+        _descriptionText.text = achievementDto.Description;
+        _rewardAmountText.text = achievementDto.RewardAmount.ToString();
+        _progressSlider.value = achievementDto.CurrentValue / achievementDto.GoalValue;
+        _progressText.text = $"{achievementDto.CurrentValue} / {achievementDto.GoalValue}";
         _rewardAmountText.text = string.Empty;
-        if (!achievement.IsRewardClaimed && achievement.CurrentValue >= achievement.GoalValue)
-        {
-            _getRewardButton.interactable = true;
-        }
-        else
-        {
-            _getRewardButton.interactable = false;
-        }
+        _getRewardButton.interactable = achievementDto.CanClaimReward();
     }
 
-    public void OnClickGetButton()
+    public void OnClickClaimRewardButton()
     {
-        _rewardClaimDateText.text = DateTime.Now.ToString("yyyy.MM.dd");
-        _getRewardButton.interactable = false;
-        //EventManager.Broadcast(new CurrencyIncreasedEvent(ECurrencyType.Gold, (int)_rewardAmountText));
+        Debug.Log("업적받기");
+        //EventManager.Broadcast(new CurrencyIncreaseEvent(ECurrencyType.Gold, int.Parse(_rewardAmountText.text)));
+        if(AchievementManager.Instance.TryClaimReward(_achievementDto))
+        {
+            _rewardClaimDateText.text = DateTime.Now.ToString("yyyy.MM.dd");
+        }
     }
 }

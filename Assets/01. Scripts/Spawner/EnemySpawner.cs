@@ -14,7 +14,7 @@ public class EnemySpawner : MonoBehaviour
         if(_timer >= _spawnDuration && _enemyCount < _maxEnemySpawnCount)
         {
             var type = Random.Range(0, (int)EEnemyType.Count);
-            EnemyPoolManager.Instance.GetObject((EEnemyType)type, transform.position, Quaternion.identity);
+            EnemyPoolManager.Instance.GetObject(EEnemyType.Hover, transform.position, Quaternion.identity);
             _enemyCount++;
             _timer = 0f;
         }
