@@ -77,7 +77,7 @@ public class AchievementManager : Singleton<AchievementManager>
         if(achievement.TryClaimReward())
         {
             CurrencyManager.Instance.AddCurrency(achievement.RewardCurrencyType, achievement.RewardAmount);
-
+            EventManager.Broadcast(_achivementDataChangedEvent);
             return true;
         }
 
