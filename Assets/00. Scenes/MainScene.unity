@@ -1202,6 +1202,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4360a2103ca96e24c99b244bf55fef83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isDontDestroy: 0
   _poolInfoList:
   - Type: 0
     InitCount: 5
@@ -2345,6 +2346,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e677050833ecf6441a36e6e4b8943a84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isDontDestroy: 0
 --- !u!4 &1808744611
 Transform:
   m_ObjectHideFlags: 0
