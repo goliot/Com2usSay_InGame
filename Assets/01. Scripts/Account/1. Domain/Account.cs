@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
-
 public class Account
 {
     public string Email { get; }
@@ -14,9 +11,6 @@ public class Account
         Password = password;
     }
 
-    // 중복 이메일 체크용
-    //private static readonly HashSet<string> _registeredEmails = new();
-
     public static bool TryCreate(string email, string nickname, string password, out Account account, out string errorMessage)
     {
         account = null;
@@ -29,12 +23,6 @@ public class Account
             errorMessage = emailSpecification.ErrorMessage;
             return false;
         }
-
-        //if (!_registeredEmails.Add(email.ToLowerInvariant()))
-        //{
-        //    errorMessage = "이미 사용 중인 이메일입니다.";
-        //    return false;
-        //}
 
         // 닉네임 검증
         var nicknameSpecification = new AccountNicknameSpecification();

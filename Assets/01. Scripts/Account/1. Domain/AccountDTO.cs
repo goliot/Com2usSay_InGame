@@ -1,7 +1,3 @@
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using System;
-
 public class AccountDTO
 {
     public string Email;

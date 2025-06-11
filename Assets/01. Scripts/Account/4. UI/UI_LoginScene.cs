@@ -60,18 +60,14 @@ public class UI_LoginScene : MonoBehaviour
     [SerializeField] private GameObject _loginPanel;
     [SerializeField] private GameObject _registerPanel;
     [SerializeField] private TextMeshProUGUI _resultText;
+    private Vector2 _resultOriginAnchoredPos;
+    private AccountInputFields _nowPanel;
 
     [Header("# Login")]
     [SerializeField] private AccountInputFields _loginFields;
 
     [Header("# Register")]
     [SerializeField] private AccountInputFields _registerFields;
-
-    [Header("# Security")]
-    private const string PREFIX = "Email_";
-
-    private AccountInputFields _nowPanel;
-    private Vector2 _resultOriginAnchoredPos;
 
     private void Awake()
     {
@@ -139,7 +135,6 @@ public class UI_LoginScene : MonoBehaviour
         string nickname = _registerFields.NicknameInputField.text;
         string pw = _registerFields.PasswordInputField.text;
         string pwCheck = _registerFields.PasswordCheckInputField.text;
-        string emailWithPrefix = PREFIX + email;
 
         if (string.IsNullOrWhiteSpace(email))
         {
