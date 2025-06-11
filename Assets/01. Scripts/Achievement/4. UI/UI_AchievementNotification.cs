@@ -38,6 +38,6 @@ public class UI_AchievementNotification : MonoBehaviour
 
         AchievementDTO data = _popupQueue.Dequeue();
         GameObject notification = Instantiate(NotifiationPopup, NotificationParent);
-        notification.GetComponent<UI_AchievementNotificationPopup>().Init(data);
+        notification.GetComponent<UI_AchievementNotificationPushAlert>().Init(data);
     }
 }
