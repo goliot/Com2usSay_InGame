@@ -4,7 +4,7 @@ using DG.Tweening;
 using UnityEngine.UI;
 using Unity.FPS.Game;
 
-public class UI_AchievementNotificationPopup : MonoBehaviour
+public class UI_AchievementNotificationPushAlert : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _description;
     [SerializeField] private Image _background;
