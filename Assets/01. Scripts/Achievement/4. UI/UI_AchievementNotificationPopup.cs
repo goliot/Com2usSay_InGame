@@ -11,10 +11,13 @@ public class UI_AchievementNotificationPopup : MonoBehaviour
 
     private void OnEnable()
     {
-        // 알파 1로 초기화
         SetAlpha(1f);
-        _description.DOFade(0f, 3f);
+
+        _description.DOFade(0f, 3f)
+            .SetDelay(3f);
+
         _background.DOFade(0f, 3f)
+            .SetDelay(3f)
             .OnComplete(() =>
             {
                 EventManager.Broadcast(Events.NotificationPopupEndEvent);
