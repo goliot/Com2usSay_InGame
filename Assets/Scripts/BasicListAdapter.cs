@@ -67,6 +67,7 @@ namespace Your.Namespace.Here.UniqueStringHereToAvoidNamespaceConflicts.Lists
             Data.ResetItems(achievements);
 
         }
+
         private void Refresh(AchievementDataChangedEvent evt)
         {
             List<AchievementDTO> achievements = AchievementManager.Instance.Achievements;
