@@ -776,13 +776,13 @@ MonoBehaviour:
     EmailInputField: {fileID: 7127313741781387433}
     NicknameInputField: {fileID: 0}
     PasswordInputField: {fileID: 7169692113683960308}
-    PasswordCheck: {fileID: 0}
+    PasswordCheckInputField: {fileID: 0}
     ConfirmButton: {fileID: 65269566766843565}
   _registerFields:
     EmailInputField: {fileID: 1101034746556990729}
     NicknameInputField: {fileID: 6441087506026534063}
     PasswordInputField: {fileID: 6351454523056283216}
-    PasswordCheck: {fileID: 6385556100299101902}
+    PasswordCheckInputField: {fileID: 6385556100299101902}
     ConfirmButton: {fileID: 4385038395725200095}
 --- !u!4 &878532804
 Transform:

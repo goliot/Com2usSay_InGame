@@ -13,21 +13,33 @@ public struct AccountInputFields
     public TMP_InputField EmailInputField;
     public TMP_InputField NicknameInputField;
     public TMP_InputField PasswordInputField;
-    public TMP_InputField PasswordCheck;
+    public TMP_InputField PasswordCheckInputField;
     public Button ConfirmButton;
 
     public List<TMP_InputField> Fields { get; private set; }
 
     public void InitFields()
     {
-        Fields = new List<TMP_InputField>(){
-            EmailInputField,
-            NicknameInputField,
-            PasswordInputField
-        };
-        if(PasswordCheck != null)
+        Fields = new List<TMP_InputField>();
+
+        if (EmailInputField != null)
         {
-            Fields.Add(PasswordCheck);
+            Fields.Add(EmailInputField);
+        }
+
+        if (NicknameInputField != null)
+        {
+            Fields.Add(NicknameInputField);
+        }
+
+        if (PasswordInputField != null)
+        {
+            Fields.Add(PasswordInputField);
+        }
+
+        if (PasswordCheckInputField != null)
+        {
+            Fields.Add(PasswordCheckInputField);
         }
     }
 
@@ -126,7 +138,7 @@ public class UI_LoginScene : MonoBehaviour
         string email = _registerFields.EmailInputField.text;
         string nickname = _registerFields.NicknameInputField.text;
         string pw = _registerFields.PasswordInputField.text;
-        string pwCheck = _registerFields.PasswordCheck.text;
+        string pwCheck = _registerFields.PasswordCheckInputField.text;
         string emailWithPrefix = PREFIX + email;
 
         if (string.IsNullOrWhiteSpace(email))

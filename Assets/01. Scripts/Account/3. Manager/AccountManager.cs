@@ -25,7 +25,7 @@ public class AccountManager : Singleton<AccountManager>
             return false;
         }
 
-        if (Account.TryCreate(email, nickname, password, out Account account, out string error))
+        if (Account.TryCreate(email, nickname, password, out Account account, out string errorMessage))
         {
             message = "회원가입에 성공했습니다.";
             _repository.Save(new AccountDTO(account.Email, nickname, SHA256Encryption.Encrypt(account.Password + SALT)));
@@ -33,7 +33,7 @@ public class AccountManager : Singleton<AccountManager>
         }
         else
         {
-            message = error;
+            message = errorMessage;
             return false;
         }
     }
