@@ -22,8 +22,7 @@ public class LevelDataSO : ScriptableObject
 
         if (totalWeight <= 0f)
         {
-            Debug.LogWarning("EnemyAppearanceDatas의 총 확률이 0 이하입니다.");
-            return EEnemyType.Count; // 예외 처리: 기본값 반환
+            throw new System.Exception("EnemyAppearanceDatas의 총 확률이 0 이하입니다.");
         }
 
         float randomValue = Random.Range(0f, totalWeight);
@@ -38,7 +37,6 @@ public class LevelDataSO : ScriptableObject
             }
         }
 
-        // 부동소수점 문제로 인해 끝까지 도달했을 경우 대비
         return EnemyAppearanceDatas[EnemyAppearanceDatas.Count - 1].EnemyType;
     }
 }

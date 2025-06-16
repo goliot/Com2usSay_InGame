@@ -15,3 +15,9 @@ MonoBehaviour:
   Level: 0
   SpawnInterval: 0
   SpawnProbability: 0.004
+  MonsterStatMultiplier: 0
+  EnemyAppearanceDatas:
+  - EnemyType: 0
+    EnemyTypeProbability: 0
+  - EnemyType: 0
+    EnemyTypeProbability: 0
