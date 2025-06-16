@@ -7,7 +7,7 @@ public class LevelDataSO : ScriptableObject
     public int Level;
     public float SpawnInterval;
     [Range(0, 1f)] public float SpawnProbability;
-    public float MonsterStatMultiplier;
+    public float MonsterStatMultiplier = 1f;
 
     public List<EnemyAppearanceData> EnemyAppearanceDatas;
 

@@ -6,7 +6,7 @@ public class StageManager : Singleton<StageManager>
 {
     public Action OnLevelChangeEvent;
 
-    [SerializeField] private float _requiredTimeForNextStage;
+    [SerializeField] private float _requiredTimeForNextStage = 10f;
     [SerializeField] private List<LevelDataSO> StageDataSO;
     private Dictionary<int, LevelDataSO> StageDataDict;
 
