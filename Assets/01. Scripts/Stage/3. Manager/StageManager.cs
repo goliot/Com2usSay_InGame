@@ -16,6 +16,7 @@ public class StageManager : Singleton<StageManager>
     private StageRepository _repository;
 
     private float _timer = 0f;
+    public float Timer => _timer;
 
     protected override void Awake()
     {
@@ -61,14 +62,15 @@ public class StageManager : Singleton<StageManager>
 
         if(_timer >= _requiredTimeForNextStage)
         {
-            OnLevelChangeEvent?.Invoke();
             _stage.IncreaseLevel();
+            OnLevelChangeEvent?.Invoke();
             _timer = 0f;
         }
     }
 
     public bool TryGetNextEnemyType(out EEnemyType type)
     {
+
         float value = UnityEngine.Random.value;
         if(value <= StageDataDict[_stage.CurrentLevel].SpawnProbability)
         {
