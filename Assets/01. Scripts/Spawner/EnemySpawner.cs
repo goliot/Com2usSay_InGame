@@ -40,6 +40,7 @@ public class EnemySpawner : MonoBehaviour
             if (StageManager.Instance.TryGetNextEnemyType(out var type))
             {
                 EnemyPoolManager.Instance.GetObject(type, point.position);
+                //Instantiate()
             }
         }
 

@@ -70,11 +70,11 @@ public class StageManager : Singleton<StageManager>
 
     public bool TryGetNextEnemyType(out EEnemyType type)
     {
-
+        LevelDataSO data = GetCurrentLevelData();
         float value = UnityEngine.Random.value;
-        if(value <= StageDataDict[_stage.CurrentLevel].SpawnProbability)
+        if(value <= data.SpawnProbability)
         {
-            type = StageDataDict[_stage.CurrentLevel].GetRandomEnemy();
+            type = data.GetRandomEnemy();
             return true;
         }
 
@@ -84,11 +84,30 @@ public class StageManager : Singleton<StageManager>
 
     public float GetSpawnInterval()
     {
-        return StageDataDict[_stage.CurrentLevel].SpawnInterval;
+        LevelDataSO data = GetCurrentLevelData();
+
+        return data.SpawnInterval;
     }
 
     public float GetStatMultiplier()
     {
-        return StageDataDict[_stage.CurrentLevel].MonsterStatMultiplier;
+        LevelDataSO data = GetCurrentLevelData();
+
+        return data.MonsterStatMultiplier;
+    }
+
+    private LevelDataSO GetCurrentLevelData()
+    {
+        LevelDataSO data;
+        if (_stage.CurrentLevel > StageDataDict.Count)
+        {
+            data = StageDataDict[StageDataDict.Count];
+        }
+        else
+        {
+            data = StageDataDict[_stage.CurrentLevel];
+        }
+
+        return data;
     }
 }

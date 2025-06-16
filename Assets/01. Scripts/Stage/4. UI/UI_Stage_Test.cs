@@ -18,7 +18,7 @@ public class UI_Stage_Test : MonoBehaviour
     {
         StageDTO dto = StageManager.Instance.StageDto;
 
-        StageTypeText.text = nameof(dto.StageType);
+        StageTypeText.text = dto.StageType.ToString();
         CurrentStageText.text = dto.CurrentLevel.ToString();
         TimerText.text = StageManager.Instance.Timer.ToString();
     }

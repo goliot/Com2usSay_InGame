@@ -199,6 +199,10 @@ namespace Unity.FPS.AI
                 m_EyeRendererData.Renderer.SetPropertyBlock(m_EyeColorMaterialPropertyBlock,
                     m_EyeRendererData.MaterialIndex);
             }
+
+            m_Health.MaxHealth = m_Health.MaxHealthData * StageManager.Instance.GetStatMultiplier();
+            m_Health.CurrentHealth = m_Health.MaxHealth;
+            Debug.LogWarning(m_Health.CurrentHealth);
         }
 
         void Update()

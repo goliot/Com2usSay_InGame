@@ -18,7 +18,7 @@ public class AchievementRepository
         string json = JsonUtility.ToJson(datas);
         PlayerPrefs.SetString(SAVE_KEY, json);
 
-        Debug.Log($"Save : {json}");
+        //Debug.Log($"Save : {json}");
     }
 
     public List<AchievementSaveData> Load()

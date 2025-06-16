@@ -19,27 +19,30 @@ public class UI_Stage : MonoBehaviour
 
     private void Start()
     {
-        Refresh();
+        //Refresh();
 
         StageManager.Instance.OnLevelChangeEvent += Refresh;
     }
 
     private void Update()
     {
-        StageDTO dto = StageManager.Instance.StageDto;
+        //StageDTO dto = StageManager.Instance.StageDto;
 
-        if (dto.StageType == EStageType.Hahahahaha)
-        {
-            AnimateHaLoop();
-        }
+        //if (dto.StageType == EStageType.Hahahahaha)
+        //{
+        //    AnimateHaLoop();
+        //}
     }
 
     private void Refresh()
     {
         StageDTO dto = StageManager.Instance.StageDto;
 
-        float targetX = -pixelsPerStage * (dto.CurrentLevel - 1);
-        difficultyBar.DOAnchorPosX(targetX, tweenDuration).SetEase(Ease.OutCubic);
+        difficultyBar.transform.position = new Vector3(
+            difficultyBar.transform.position.x + haLoopResetThreshold, difficultyBar.transform.position.y, difficultyBar.transform.position.z);
+
+        //float targetX = -pixelsPerStage * (dto.CurrentLevel - 1);
+        //difficultyBar.DOAnchorPosX(targetX, tweenDuration).SetEase(Ease.OutCubic);
     }
 
     private void AnimateHaLoop()
