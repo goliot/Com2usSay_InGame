@@ -660,6 +660,53 @@ MonoBehaviour:
   EndScale: 0.9
   StartScale: 1
   Duration: 0.2
+--- !u!1 &407089048
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 407089049}
+  - component: {fileID: 407089050}
+  m_Layer: 0
+  m_Name: AttendanceManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &407089049
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 407089048}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 706.926, y: 929.76886, z: -3.4684322}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &407089050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 407089048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3837ffbfce205043b8d46b0b446228f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isDontDestroy: 0
+  _attendanceSOList:
+  - {fileID: 11400000, guid: 372eb15ab5397ae41be8ea5143086382, type: 2}
 --- !u!1 &555408656
 GameObject:
   m_ObjectHideFlags: 0
@@ -7940,3 +7987,4 @@ SceneRoots:
   - {fileID: 1906286932}
   - {fileID: 904770615}
   - {fileID: 878532804}
+  - {fileID: 407089049}
