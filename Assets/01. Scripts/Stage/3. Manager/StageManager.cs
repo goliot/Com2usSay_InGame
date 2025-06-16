@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +8,7 @@ public class StageManager : Singleton<StageManager>
     public Action OnLevelChangeEvent;
 
     [SerializeField] private float _requiredTimeForNextStage = 10f;
+    public float RequiredTimeForNextStage => _requiredTimeForNextStage;
     [SerializeField] private List<LevelDataSO> StageDataSO;
     private Dictionary<int, LevelDataSO> StageDataDict;
 
@@ -16,7 +18,7 @@ public class StageManager : Singleton<StageManager>
     private StageRepository _repository;
 
     private float _timer = 0f;
-    public float Timer => _timer;
+    public float FullGameTimer { get; private set; }
 
     protected override void Awake()
     {
@@ -25,8 +27,15 @@ public class StageManager : Singleton<StageManager>
         Init();
     }
 
+    private void Start()
+    {
+        
+        StartCoroutine(CoFullGameTimerEvent());
+    }
+
     private void Init()
     {
+        FullGameTimer = 0f;
         _repository = new StageRepository();
         StageDataDict = new Dictionary<int, LevelDataSO>(StageDataSO.Count);
         foreach(var data in StageDataSO)
@@ -38,7 +47,6 @@ public class StageManager : Singleton<StageManager>
 
             StageDataDict.Add(data.Level, data);
         }
-        // TODO : 저장/로드
 
         StageSaveData saveData = _repository.Load();
         if(saveData != null)
@@ -53,6 +61,7 @@ public class StageManager : Singleton<StageManager>
 
     private void Update()
     {
+        FullGameTimer += Time.deltaTime;
         CheckTimeAndManageLevel();
     }
 
@@ -109,5 +118,17 @@ public class StageManager : Singleton<StageManager>
         }
 
         return data;
+    }
+
+    private IEnumerator CoFullGameTimerEvent()
+    {
+        var waitForSecond = new WaitForSecondsRealtime(1f);
+
+        while(true)
+        {
+            yield return waitForSecond;
+
+            OnLevelChangeEvent?.Invoke();
+        }
     }
 }

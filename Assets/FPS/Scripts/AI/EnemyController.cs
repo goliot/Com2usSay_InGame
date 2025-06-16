@@ -121,6 +121,7 @@ namespace Unity.FPS.AI
 
         void Start()
         {
+            PatrolPath = FindObjectOfType<PatrolPath>().GetComponent<PatrolPath>();
             m_EnemyManager = FindObjectOfType<EnemyManager>();
             DebugUtility.HandleErrorIfNullFindObject<EnemyManager, EnemyController>(m_EnemyManager, this);
 

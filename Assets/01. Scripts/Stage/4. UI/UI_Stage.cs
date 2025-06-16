@@ -1,60 +1,51 @@
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
+using TMPro;
+using System;
 
 public class UI_Stage : MonoBehaviour
 {
     [Header("Stage Bar Settings")]
     public RectTransform difficultyBar;     // 전체 난이도 바 (Level.png)
-    public float pixelsPerStage = 133.33f;  // 스테이지 1단계당 이동 거리
     public float tweenDuration = 0.4f;      // DOTween 이동 시간
-
-    [Header("HAHA Loop Settings")]
-    public RectTransform haLoop;            // HAHAHA 반복 영역
-    public float haLoopSpeed = 100f;        // px/sec
     public float haLoopResetThreshold = -400f; // 1 타일만큼 밀리면 초기화
-    public float haLoopWidth = 400f;        // 한 HAHAHA 이미지 폭
 
-    private int lastStageLevel = 0;
+    [Header("# Texts")]
+    //public TextMeshProUGUI StageTypeText;
+    public TextMeshProUGUI CurrentStageText;
+    public TextMeshProUGUI TimerText;
 
     private void Start()
     {
-        //Refresh();
+        tweenDuration = StageManager.Instance.RequiredTimeForNextStage * 3;
+        Refresh();
 
         StageManager.Instance.OnLevelChangeEvent += Refresh;
-    }
 
-    private void Update()
-    {
-        //StageDTO dto = StageManager.Instance.StageDto;
-
-        //if (dto.StageType == EStageType.Hahahahaha)
-        //{
-        //    AnimateHaLoop();
-        //}
+        float targetX = difficultyBar.anchoredPosition.x + haLoopResetThreshold;
+        Sequence loopSequence = DOTween.Sequence();
+        loopSequence.Append(
+            difficultyBar.DOAnchorPosX(difficultyBar.anchoredPosition.x + haLoopResetThreshold, tweenDuration)
+                .SetEase(Ease.Linear)
+        );
+        loopSequence.SetLoops(-1, LoopType.Restart);
     }
 
     private void Refresh()
     {
         StageDTO dto = StageManager.Instance.StageDto;
+        // 현재 위치에서 -400만큼 이동
 
-        difficultyBar.transform.position = new Vector3(
-            difficultyBar.transform.position.x + haLoopResetThreshold, difficultyBar.transform.position.y, difficultyBar.transform.position.z);
-
-        //float targetX = -pixelsPerStage * (dto.CurrentLevel - 1);
-        //difficultyBar.DOAnchorPosX(targetX, tweenDuration).SetEase(Ease.OutCubic);
+        //StageTypeText.text = dto.StageType.ToString();
+        CurrentStageText.text = $"{dto.StageType.ToString()}\nLevel {dto.CurrentLevel.ToString()}";
+        TimerText.text = GetFormattedFullGameTime();
     }
 
-    private void AnimateHaLoop()
+    public string GetFormattedFullGameTime()
     {
-        Vector2 pos = haLoop.anchoredPosition;
-        pos.x -= haLoopSpeed * Time.deltaTime;
-
-        if (pos.x <= haLoopResetThreshold)
-        {
-            pos.x += haLoopWidth;
-        }
-
-        haLoop.anchoredPosition = pos;
+        int minutes = Mathf.FloorToInt(StageManager.Instance.FullGameTimer / 60f);
+        int seconds = Mathf.FloorToInt(StageManager.Instance.FullGameTimer % 60f);
+        return string.Format("{0:D2}:{1:D2}", minutes, seconds);
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -19,7 +20,13 @@ public class UI_Stage_Test : MonoBehaviour
         StageDTO dto = StageManager.Instance.StageDto;
 
         StageTypeText.text = dto.StageType.ToString();
-        CurrentStageText.text = dto.CurrentLevel.ToString();
-        TimerText.text = StageManager.Instance.Timer.ToString();
+        CurrentStageText.text = $"Stage {dto.CurrentLevel.ToString()}";
+        TimerText.text = GetFormattedFullGameTime(); ;
+    }
+
+    private string GetFormattedFullGameTime()
+    {
+        TimeSpan time = TimeSpan.FromSeconds(StageManager.Instance.FullGameTimer);
+        return string.Format("{0:D2}:{1:D2}", time.Minutes, time.Seconds);
     }
 }
