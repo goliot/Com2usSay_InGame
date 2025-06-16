@@ -32,7 +32,9 @@ public class Stage
         int maxIndex = (int)EStageType.Count - 1;
 
         if (index > maxIndex)
+        {
             index = maxIndex;
+        }
 
         return (EStageType)index;
     }
