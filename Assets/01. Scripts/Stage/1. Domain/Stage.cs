@@ -3,7 +3,7 @@ using System;
 
 public class Stage
 {
-    public EStageType StageType { get; private set; }
+    public EStageType StageType => GetStageType(CurrentLevel);
     public int CurrentLevel { get; private set; }
 
     public Stage(int currentLevel)
@@ -14,13 +14,11 @@ public class Stage
         }
 
         CurrentLevel = currentLevel;
-        StageType = GetStageType(currentLevel);
     }
 
     public void IncreaseLevel()
     {
         CurrentLevel++;
-        StageType = GetStageType(CurrentLevel);
     }
 
     public EStageType GetStageType(int stageNumber)

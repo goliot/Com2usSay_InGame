@@ -8,6 +8,7 @@ public class StageManager : Singleton<StageManager>
 
     [SerializeField] private float _requiredTimeForNextStage;
     [SerializeField] private List<LevelDataSO> StageDataSO;
+    private Dictionary<int, LevelDataSO> StageDataDict;
 
     private Stage _stage;
     public StageDTO StageDto => new StageDTO(_stage);
@@ -22,6 +23,16 @@ public class StageManager : Singleton<StageManager>
 
     private void Init()
     {
+        StageDataDict = new Dictionary<int, LevelDataSO>(StageDataSO.Count);
+        foreach(var data in StageDataSO)
+        {
+            if(StageDataDict.ContainsKey(data.Level))
+            {
+                throw new Exception($"동일 레벨의 데이터가 존재합니다. {data.Level}");
+            }
+
+            StageDataDict.Add(data.Level, data);
+        }
         // TODO : 저장/로드
         _stage = new Stage(1);
     }
@@ -35,7 +46,7 @@ public class StageManager : Singleton<StageManager>
     {
         _timer += Time.deltaTime;
 
-        if(_timer >= StageDataSO[_stage.CurrentLevel - 1].SpawnInterval)
+        if(_timer >= _requiredTimeForNextStage)
         {
             OnLevelChangeEvent?.Invoke();
             _stage.IncreaseLevel();
@@ -43,16 +54,26 @@ public class StageManager : Singleton<StageManager>
         }
     }
 
-    public bool GetNextEnemyType(out EEnemyType type)
+    public bool TryGetNextEnemyType(out EEnemyType type)
     {
         float value = UnityEngine.Random.value;
-        if(value <= StageDataSO[_stage.CurrentLevel - 1].SpawnProbability)
+        if(value <= StageDataDict[_stage.CurrentLevel].SpawnProbability)
         {
-            type = EEnemyType.Hover; //TODO  랜덤 타입
+            type = StageDataDict[_stage.CurrentLevel].GetRandomEnemy();
             return true;
         }
 
         type = EEnemyType.Count;
         return false;
+    }
+
+    public float GetSpawnInterval()
+    {
+        return StageDataDict[_stage.CurrentLevel].SpawnInterval;
+    }
+
+    public float GetStatMultiplier()
+    {
+        return StageDataDict[_stage.CurrentLevel].MonsterStatMultiplier;
     }
 }
