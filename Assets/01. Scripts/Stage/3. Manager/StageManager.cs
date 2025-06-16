@@ -12,6 +12,9 @@ public class StageManager : Singleton<StageManager>
 
     private Stage _stage;
     public StageDTO StageDto => new StageDTO(_stage);
+
+    private StageRepository _repository;
+
     private float _timer = 0f;
 
     protected override void Awake()
@@ -23,6 +26,7 @@ public class StageManager : Singleton<StageManager>
 
     private void Init()
     {
+        _repository = new StageRepository();
         StageDataDict = new Dictionary<int, LevelDataSO>(StageDataSO.Count);
         foreach(var data in StageDataSO)
         {
@@ -34,7 +38,16 @@ public class StageManager : Singleton<StageManager>
             StageDataDict.Add(data.Level, data);
         }
         // TODO : 저장/로드
-        _stage = new Stage(1);
+
+        StageSaveData saveData = _repository.Load();
+        if(saveData != null)
+        {
+            _stage = new Stage(saveData.CurrentLevel);
+        }
+        else
+        {
+            _stage = new Stage(1);
+        }
     }
 
     private void Update()

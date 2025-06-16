@@ -24,7 +24,9 @@ public class Stage
     public EStageType GetStageType(int stageNumber)
     {
         if (stageNumber < 1)
+        {
             throw new ArgumentOutOfRangeException(nameof(stageNumber), "스테이지 번호는 1 이상이어야 합니다.");
+        }
 
         int index = (stageNumber - 1) / 3;
         int maxIndex = (int)EStageType.Count - 1;
