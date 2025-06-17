@@ -1,17 +1,17 @@
 public class RankingDTO
 {
-    public readonly string Id;
+    public readonly string EmailId;
     public readonly int Score;
 
     public RankingDTO(Ranking ranking)
     {
-        Id = ranking.Id;
+        EmailId = ranking.EmailId;
         Score = ranking.Score;
     }
 
     public RankingDTO(RankingSaveData data)
     {
-        Id = data.Id;
+        EmailId = data.EmailId;
         Score = data.Score;
     }
 }

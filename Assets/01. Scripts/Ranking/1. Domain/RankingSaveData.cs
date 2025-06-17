@@ -4,18 +4,18 @@ using System.Collections.Generic;
 [Serializable]
 public class RankingSaveData
 {
-    public string Id;
+    public string EmailId;
     public int Score;
 
     public RankingSaveData(RankingDTO dto)
     {
-        Id = dto.Id;
+        EmailId = dto.EmailId;
         Score = dto.Score;
     }
 
-    public RankingSaveData(string id, int score)
+    public RankingSaveData(string emailId, int score)
     {
-        Id = id;
+        EmailId = emailId;
         Score = score;
     }
 }

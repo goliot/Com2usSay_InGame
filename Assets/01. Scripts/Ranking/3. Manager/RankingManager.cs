@@ -56,7 +56,7 @@ public class RankingManager : Singleton<RankingManager>
             }
         }
 
-        _ranking = _everyRankingList.Find(data => data.Id == AccountManager.Instance.UserId);
+        _ranking = _everyRankingList.Find(data => data.EmailId == AccountManager.Instance.UserId);
         if (_ranking == null)
         {
             _ranking = new Ranking(AccountManager.Instance.UserId, 0);
