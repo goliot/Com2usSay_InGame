@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Unity.FPS.Game
@@ -67,6 +67,11 @@ namespace Unity.FPS.Game
 
         void EndGame(bool win)
         {
+            if(RankingManager.Instance != null)
+            {
+                RankingManager.Instance.SaveMyScore();
+            }
+
             // unlocks the cursor before leaving the scene, to be able to click buttons
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
