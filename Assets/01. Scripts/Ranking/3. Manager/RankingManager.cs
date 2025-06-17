@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Unity.FPS.Game;
+using UnityEngine.SceneManagement;
 
 public class RankingManager : Singleton<RankingManager>
 {
@@ -21,6 +22,24 @@ public class RankingManager : Singleton<RankingManager>
     private void Start()
     {
         EventManager.AddListener<MonsterKillEvent>(AddKillCount);
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "IntroMenu")
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void Init()
