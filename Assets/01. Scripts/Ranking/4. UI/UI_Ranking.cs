@@ -45,7 +45,7 @@ public class UI_Ranking : MonoBehaviour
 
                 if (sortedRanking[i].Id == AccountManager.Instance.UserId)
                 {
-                    myRankingIndex = i;
+                    myRankingIndex = i + 1;
                 }
             }
             else

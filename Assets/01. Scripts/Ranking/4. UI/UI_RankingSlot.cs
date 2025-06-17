@@ -23,6 +23,10 @@ public class UI_RankingSlot : MonoBehaviour
 
         if(dto.Id == AccountManager.Instance.UserId)
         {
+            if(_slotPanel == null)
+            {
+                _slotPanel = GetComponent<Image>();
+            }
             _slotPanel.color = Color.yellow;
         }
         else

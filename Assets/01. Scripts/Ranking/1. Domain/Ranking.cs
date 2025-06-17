@@ -8,9 +8,13 @@ public class Ranking
 
     public Ranking(string id, int score)
     {
-        if(string.IsNullOrEmpty(id))
+        // 이메일 검증
+        var emailSpecification = new AccountEmailSpecification();
+        string errorMessage;
+        if (!emailSpecification.IsSatisfiedBy(id))
         {
-            throw new Exception("id가 없습니다");
+            errorMessage = emailSpecification.ErrorMessage;
+            throw new Exception(errorMessage);
         }
         if(score < 0)
         {
