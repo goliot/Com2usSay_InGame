@@ -21,12 +21,6 @@ public class RankingRepository
         {
             mockDatas.Add(new RankingSaveData($"{GenerateRandomID()}", Random.Range(0, 500)));
         }
-
-        var myRanking = GetMyRanking();
-        if(myRanking != null)
-        {
-            mockDatas.Add(myRanking);
-        }
         return mockDatas;
 
         if(!PlayerPrefs.HasKey(SAVE_KEY))
