@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1442706762320668141}
   - component: {fileID: 3380259048248578400}
   - component: {fileID: 6027222558202325871}
+  - component: {fileID: 4307179829827626265}
   m_Layer: 5
   m_Name: Panel_RankSlot
   m_TagString: Untagged
@@ -81,6 +82,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &4307179829827626265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2140346374484975499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 472b65850634469439e9716972562ac8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rankIndexText: {fileID: 3883296204662156182}
+  _userIdText: {fileID: 1283438908326881121}
+  _userScoreText: {fileID: 8940825792760586741}
 --- !u!1 &2631333643724369620
 GameObject:
   m_ObjectHideFlags: 0
