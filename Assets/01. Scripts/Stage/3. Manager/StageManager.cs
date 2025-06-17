@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class StageManager : Singleton<StageManager>
 {
-    public Action OnLevelChangeEvent;
+    public event Action OnLevelChangeEvent;
 
     [SerializeField] private float _requiredTimeForNextStage = 10f;
     public float RequiredTimeForNextStage => _requiredTimeForNextStage;
