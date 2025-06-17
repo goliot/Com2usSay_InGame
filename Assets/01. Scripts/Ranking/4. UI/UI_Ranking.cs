@@ -6,6 +6,8 @@ public class UI_Ranking : MonoBehaviour
     [SerializeField] private GameObject _slotPrefab;
     [SerializeField] private Transform _contentParent;
 
+    [SerializeField] private UI_RankingSlot _myRankingSlot;
+
     private List<GameObject> _slotPool = new List<GameObject>();
 
     private void OnEnable()
@@ -20,6 +22,7 @@ public class UI_Ranking : MonoBehaviour
 
     private void Refresh()
     {
+        int myRankingIndex = 0;
         List<RankingDTO> sortedRanking = RankingManager.Instance.GetSortedRankings();
 
         // 슬롯 부족하면 새로 생성
@@ -39,11 +42,25 @@ public class UI_Ranking : MonoBehaviour
                 // 슬롯에 데이터 바인딩
                 var uiSlot = _slotPool[i].GetComponent<UI_RankingSlot>();
                 uiSlot.SetData(sortedRanking[i], i + 1); // 랭킹 번호 1부터 시작
+
+                if (sortedRanking[i].Id == AccountManager.Instance.UserId)
+                {
+                    myRankingIndex = i;
+                }
             }
             else
             {
                 _slotPool[i].SetActive(false); // 필요 없는 슬롯은 숨김
             }
         }
+
+        SetMyRankingSlot(myRankingIndex);
+    }
+
+    private void SetMyRankingSlot(int rankingIndex)
+    {
+        RankingDTO myRanking = RankingManager.Instance.GetMyRanking();
+
+        _myRankingSlot.SetData(myRanking, rankingIndex);
     }
 }

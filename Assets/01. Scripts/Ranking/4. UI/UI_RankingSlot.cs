@@ -17,7 +17,7 @@ public class UI_RankingSlot : MonoBehaviour
 
     public void SetData(RankingDTO dto, int rankIndex)
     {
-        _rankIndexText.text = rankIndex.ToString();
+        _rankIndexText.text = $"# {rankIndex.ToString()}";
         _userIdText.text = dto.Id;
         _userScoreText.text = dto.Score.ToString();
 

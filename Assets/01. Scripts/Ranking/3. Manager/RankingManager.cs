@@ -76,6 +76,8 @@ public class RankingManager : Singleton<RankingManager>
         _ranking.IncreaseScore(CurrentKill);
         CurrentKill = 0;
         _isDirty = true;
+
+        _repository.Save(_everyRankingList.ConvertAll((item) =>  new RankingDTO(item)));
     }
 
     public List<RankingDTO> GetSortedRankings()
@@ -85,10 +87,16 @@ public class RankingManager : Singleton<RankingManager>
             return _cachedSortedList;
         }
 
-        _cachedSortedList = _everyRankingList.ConvertAll(r => new RankingDTO(r));
+        _cachedSortedList = _everyRankingList.ConvertAll(item => new RankingDTO(item));
         _cachedSortedList.Sort((a, b) => b.Score.CompareTo(a.Score));
         _isDirty = false;
 
         return _cachedSortedList;
+    }
+
+    //RankingDTO 하고, RankIndex
+    public RankingDTO GetMyRanking()
+    {
+        return new RankingDTO(_ranking);
     }
 }

@@ -16,12 +16,12 @@ public class RankingRepository
 
     public List<RankingSaveData> Load()
     {
-        List<RankingSaveData> mockDatas = new List<RankingSaveData>();
-        for(int i=0; i<100; ++i)
+        /*List<RankingSaveData> mockDatas = new List<RankingSaveData>();
+        for(int i=0; i<10; ++i)
         {
             mockDatas.Add(new RankingSaveData($"{GenerateRandomID()}", Random.Range(0, 500)));
         }
-        return mockDatas;
+        return mockDatas;*/
 
         if(!PlayerPrefs.HasKey(SAVE_KEY))
         {

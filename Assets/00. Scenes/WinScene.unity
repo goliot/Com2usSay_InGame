@@ -1454,6 +1454,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Panel_Rank
       objectReference: {fileID: 0}
+    - target: {fileID: 5699233393086134193, guid: 524962b3530e65848a927bf13d92eb45,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9052485513123169177, guid: 524962b3530e65848a927bf13d92eb45,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 50
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
