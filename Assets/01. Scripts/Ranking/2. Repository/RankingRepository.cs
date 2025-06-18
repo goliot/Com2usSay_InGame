@@ -49,7 +49,7 @@ public class RankingRepository
         string json = PlayerPrefs.GetString(SAVE_KEY);
         RankingSaveDataList datas = JsonUtility.FromJson<RankingSaveDataList>(json);
 
-        RankingSaveData myData = datas.DataList.Find((item) => item.EmailId == id);
+        RankingSaveData myData = datas.DataList.Find((item) => item.Nickname == id);
 
         return myData;
     }
