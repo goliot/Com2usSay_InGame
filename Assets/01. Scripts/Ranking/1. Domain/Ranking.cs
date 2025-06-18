@@ -2,16 +2,16 @@ using System;
 
 public class Ranking
 {
+    public readonly string Email;
     public readonly string Nickname;
-    private int _score; // 이 유저의 총 누적 스코어
-    public int Score => _score;
+    public int Score { get; private set; }
 
-    public Ranking(string nickname, int score)
+    public Ranking(string email, string nickname, int score)
     {
         // 이메일 검증
         var emailSpecification = new AccountEmailSpecification();
         string errorMessage;
-        if (!emailSpecification.IsSatisfiedBy(nickname))
+        if (!emailSpecification.IsSatisfiedBy(email))
         {
             errorMessage = emailSpecification.ErrorMessage;
             throw new Exception(errorMessage);
@@ -21,16 +21,17 @@ public class Ranking
             throw new Exception("Score는 음수가 될 수 없습니다.");
         }
 
+        Email = email;
         Nickname = nickname;
-        _score = score;
+        Score = score;
     }
 
-    public Ranking(RankingDTO dto) : this(dto.Nickname, dto.Score) { }
+    public Ranking(RankingDTO dto) : this(dto.Email, dto.Nickname, dto.Score) { }
 
-    public Ranking(RankingSaveData save) : this(save.Nickname, save.Score) { }
+    public Ranking(RankingSaveData save) : this(save.Email, save.Nickname, save.Score) { }
 
     public void IncreaseScore(int value)
     {
-        _score += value;
+        Score += value;
     }
 }

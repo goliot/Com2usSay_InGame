@@ -59,7 +59,7 @@ public class RankingManager : Singleton<RankingManager>
         _ranking = _everyRankingList.Find(data => data.Nickname == AccountManager.Instance.UserNickname);
         if (_ranking == null)
         {
-            _ranking = new Ranking(AccountManager.Instance.UserNickname, 0);
+            _ranking = new Ranking(AccountManager.Instance.UserEmail, AccountManager.Instance.UserNickname, 0);
             _everyRankingList.Add(_ranking);
         }
 
