@@ -17,9 +17,9 @@ public class UI_RankingSlot : MonoBehaviour
 
     public void SetData(RankingDTO dto, int rankIndex)
     {
-        _rankIndexText.text = $"# {rankIndex.ToString()}";
+        _rankIndexText.text = $"# {rankIndex.ToString("N1")}";
         _userIdText.text = dto.Nickname;
-        _userScoreText.text = dto.Score.ToString();
+        _userScoreText.text = dto.Score.ToString("N1");
 
         if(dto.Nickname == AccountManager.Instance.UserEmail)
         {
