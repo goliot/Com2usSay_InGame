@@ -47,4 +47,9 @@ public class Ranking_Lecture
 
         Score += score;
     }
+
+    public RankingDTO_Lecture ToDTO()
+    {
+        return new RankingDTO_Lecture(this);
+    }
 }

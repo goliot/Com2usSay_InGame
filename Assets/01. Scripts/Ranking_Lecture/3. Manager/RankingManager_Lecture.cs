@@ -8,8 +8,10 @@ public class RankingManager_Lecture : Singleton<RankingManager_Lecture>
 
     private RankingRepository_Lecture _repository;
     private List<Ranking_Lecture> _rankings;
+    public List<RankingDTO_Lecture> Rankings => _rankings.ConvertAll(r => r.ToDTO());
 
     private Ranking_Lecture _myRanking;
+    public RankingDTO_Lecture MyRanking => _myRanking.ToDTO();
 
     protected override void Awake()
     {
