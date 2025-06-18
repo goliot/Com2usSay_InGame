@@ -9,8 +9,8 @@ public class UI_RankingSlot_Lecture : MonoBehaviour
 
     public void Refresh(RankingDTO_Lecture ranking)
     {
-        RankTextUI.text = ranking.Rank.ToString("N1");
+        RankTextUI.text = ranking.Rank.ToString("N0");
         NicknameTextUI.text = ranking.Nickname;
-        ScoreTextUI.text = ranking.Score.ToString("N1");
+        ScoreTextUI.text = ranking.Score.ToString("N0");
     }
 }

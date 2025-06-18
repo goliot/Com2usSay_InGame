@@ -16,7 +16,7 @@ public class RankingManager_Lecture : Singleton<RankingManager_Lecture>
     protected override void Awake()
     {
         base.Awake();
-
+        OnDataChanged += Sort;
         Init();
     }
 
@@ -47,7 +47,7 @@ public class RankingManager_Lecture : Singleton<RankingManager_Lecture>
 
     private void Sort()
     {
-        _rankings.Sort((a, b) => a.Score.CompareTo(b.Score));
+        _rankings.Sort((a, b) => b.Score.CompareTo(a.Score));
 
         for(int i=0; i<_rankings.Count; ++i)
         {
