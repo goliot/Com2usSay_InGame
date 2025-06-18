@@ -43,7 +43,7 @@ public class UI_Ranking : MonoBehaviour
                 var uiSlot = _slotPool[i].GetComponent<UI_RankingSlot>();
                 uiSlot.SetData(sortedRanking[i], i + 1); // 랭킹 번호 1부터 시작
 
-                if (sortedRanking[i].Nickname == AccountManager.Instance.UserId)
+                if (sortedRanking[i].Nickname == AccountManager.Instance.UserEmail)
                 {
                     myRankingIndex = i + 1;
                 }

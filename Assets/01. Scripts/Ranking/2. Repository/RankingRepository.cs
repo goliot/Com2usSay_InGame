@@ -39,7 +39,7 @@ public class RankingRepository
         string id;
         if (AccountManager.Instance != null)
         {
-            id = AccountManager.Instance.UserId;
+            id = AccountManager.Instance.UserEmail;
         }
         else
         {

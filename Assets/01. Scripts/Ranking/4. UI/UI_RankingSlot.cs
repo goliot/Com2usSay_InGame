@@ -21,7 +21,7 @@ public class UI_RankingSlot : MonoBehaviour
         _userIdText.text = dto.Nickname;
         _userScoreText.text = dto.Score.ToString();
 
-        if(dto.Nickname == AccountManager.Instance.UserId)
+        if(dto.Nickname == AccountManager.Instance.UserEmail)
         {
             if(_slotPanel == null)
             {

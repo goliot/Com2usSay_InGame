@@ -1,7 +1,7 @@
 using UnityEngine;
 using System;
 
-public class Ranking_Lecture : MonoBehaviour
+public class Ranking_Lecture
 {
     public int Rank { get; private set; }
     public readonly string Email;
@@ -10,11 +10,12 @@ public class Ranking_Lecture : MonoBehaviour
 
     public Ranking_Lecture(string email, string nickname, int score)
     {
-        if(string.IsNullOrEmpty(email))
+        var emailSpecification = new AccountEmailSpecification();
+        if (!emailSpecification.IsSatisfiedBy(email))
         {
-            throw new Exception("이메일은 비어있을 수 없습니다.");
+            throw new Exception(emailSpecification.ErrorMessage);
         }
-        if(string.IsNullOrEmpty(nickname))
+        if (string.IsNullOrEmpty(nickname))
         {
             throw new Exception("닉네임은 비어있을 수 없습니다.");
         }
@@ -26,5 +27,24 @@ public class Ranking_Lecture : MonoBehaviour
         Email = email;
         Nickname = nickname;
         Score = score;
+    }
+
+    public void SetRank(int rank)
+    {
+        if(rank <= 0)
+        {
+            throw new Exception("랭킹은 음수일 수 없습니다.");
+        }
+        Rank = rank;
+    }
+
+    public void AddScore(int score)
+    {
+        if(score <= 0)
+        {
+            throw new Exception("점수를 뺄 수 없습니다");
+        }
+
+        Score += score;
     }
 }

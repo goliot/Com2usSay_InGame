@@ -4,7 +4,8 @@ public class AccountManager : Singleton<AccountManager>
 {
     private readonly string SALT = "123456";
 
-    public string UserId { get; private set; }
+    public AccountDTO UserAccount { get; private set; }
+    public string UserEmail { get; private set; }
     public string UserNickname { get; private set; }
 
     private AccountRepository _repository;
@@ -49,7 +50,7 @@ public class AccountManager : Singleton<AccountManager>
             string encryptedInput = SHA256Encryption.Encrypt(password + SALT);
             if (accountSaveData.Password == encryptedInput)
             {
-                SetCurrentUserId(email, accountSaveData.Nickname);
+                SetCurrentUser(new AccountDTO(accountSaveData.Email, accountSaveData.Nickname, accountSaveData.Password));
 
                 message = "성공";
                 return true;
@@ -60,9 +61,15 @@ public class AccountManager : Singleton<AccountManager>
         return false;
     }
 
+    private void SetCurrentUser(AccountDTO account)
+    {
+        UserAccount = account;
+        SetCurrentUserId(UserAccount.Email, UserAccount.Nickname);
+    }
+
     private void SetCurrentUserId(string email, string nickname)
     {
-        UserId = email;
+        UserEmail = email;
         UserNickname = nickname;
     }
 }

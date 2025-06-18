@@ -7,9 +7,9 @@ public class StageRepository
 
     public StageRepository()
     {
-        if(AccountManager.Instance != null && !string.IsNullOrEmpty(AccountManager.Instance.UserId))
+        if(AccountManager.Instance != null && !string.IsNullOrEmpty(AccountManager.Instance.UserEmail))
         {
-            SAVE_KEY = $"{AccountManager.Instance.UserId}{nameof(StageRepository)}";
+            SAVE_KEY = $"{AccountManager.Instance.UserEmail}{nameof(StageRepository)}";
         }
         else
         {
