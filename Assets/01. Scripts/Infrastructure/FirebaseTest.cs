@@ -95,7 +95,8 @@ public class FirebaseTest : MonoBehaviour
 
             Debug.Log("닉네임 변경에 성공했습니다.");
             //AddMyRanking();
-            GetMyRanking();
+            //GetMyRanking();
+            GetRankings();
         });
     }
 
@@ -124,7 +125,6 @@ public class FirebaseTest : MonoBehaviour
             }
             Debug.Log("데이터 추가/업데이트 성공");
         });*/
-
 
         _db.Collection("rankings").Document(ranking.Email).SetAsync(rankingDict).ContinueWithOnMainThread(task =>
         {
@@ -159,6 +159,27 @@ public class FirebaseTest : MonoBehaviour
             else
             {
                 Debug.Log(String.Format("Document {0} does not exist!", snapshot.Id));
+            }
+        });
+    }
+
+    private void GetRankings()
+    {
+        Query allRankingsQuery = _db.Collection("rankings").OrderByDescending("Score");
+        allRankingsQuery.GetSnapshotAsync().ContinueWithOnMainThread(task =>
+        {
+            QuerySnapshot allCitiesQuerySnapshot = task.Result;
+            foreach (DocumentSnapshot documentSnapshot in allCitiesQuerySnapshot.Documents)
+            {
+                Debug.Log(String.Format("Document data for {0} document:", documentSnapshot.Id));
+                Dictionary<string, object> city = documentSnapshot.ToDictionary();
+                foreach (KeyValuePair<string, object> pair in city)
+                {
+                    Debug.Log(String.Format("{0}: {1}", pair.Key, pair.Value));
+                }
+
+                // Newline to separate entries
+                Debug.Log("");
             }
         });
     }
